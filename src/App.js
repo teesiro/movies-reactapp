@@ -6,7 +6,7 @@ import MobileNavigation from './components/MobileNavigation';
 import axios from 'axios';
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { setBannerData, setImageURL } from './store/movieoSlice';
+import { setBannerData, setImageURL } from './store/movflixSlice';
 
 function App() {
   const dispatch = useDispatch();

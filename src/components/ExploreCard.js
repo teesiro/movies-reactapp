@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const ExploreCard = ({data, trending, index, media_type}) => {
-    const imageURL = useSelector(state => state.movieoData.imageURL)
+    const imageURL = useSelector(state => state.movflixData.imageURL)
 
     const mediaType = data.media_type ?? media_type;
 

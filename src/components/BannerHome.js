@@ -5,8 +5,8 @@ import { useSwipeable } from 'react-swipeable';
 import { useNavigate } from 'react-router-dom'
 
 const BannerHome = () => {
-  const bannerData = useSelector(state => state.movieoData.bannerData);
-  const imageURL = useSelector(state => state.movieoData.imageURL);
+  const bannerData = useSelector(state => state.movflixData.bannerData);
+  const imageURL = useSelector(state => state.movflixData.imageURL);
   const [currentImage, setCurrentImage] = useState(0);
   const navigate = useNavigate();
 

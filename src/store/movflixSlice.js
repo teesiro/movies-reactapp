@@ -5,8 +5,8 @@ const initialState = {
     imageURL : ""
   }
 
-  export const movieoSlice = createSlice({
-    name : 'movieo',
+  export const movflixSlice = createSlice({
+    name : 'movflix',
     initialState,
     reducers : {
         setBannerData : (state,action) => {
@@ -18,5 +18,5 @@ const initialState = {
     }
   })
 
-  export const { setBannerData, setImageURL } = movieoSlice.actions
-  export default movieoSlice.reducer
+  export const { setBannerData, setImageURL } = movflixSlice.actions
+  export default movflixSlice.reducer

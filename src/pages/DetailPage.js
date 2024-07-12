@@ -12,7 +12,7 @@ const DetailPage = () => {
   const params = useParams();
   const { data } = useFetchDetail(`/${params?.explore}/${params?.id}`);
   const { data: castData } = useFetchDetail(`/${params?.explore}/${params?.id}/credits`);
-  const imageURL = useSelector(state => state.movieoData.imageURL);
+  const imageURL = useSelector(state => state.movflixData.imageURL);
   const { data : similarData } = useFetch(`/${params?.explore}/${params?.id}/similar`)
   const { data : recommendationData } = useFetch(`/${params?.explore}/${params?.id}/recommendations`)
   const [playVideo, setPlayVideo] = useState(false)
