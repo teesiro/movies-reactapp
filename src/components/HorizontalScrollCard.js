@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import Card from './Card'
-import { useSelector } from 'react-redux'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 
 const HorizontalScrollCard = ({data = [], heading, trending, media_type}) => {

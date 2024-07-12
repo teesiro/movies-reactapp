@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import ExploreCard from '../components/ExploreCard';
@@ -9,27 +9,22 @@ const ExplorePage = () => {
   const [ data, setData] = useState([])
   const [ totalPageNo, setTotalPageNo ] = useState(0)
 
-  console.log("params",params.explore)
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get(`/discover/${params.explore}`,{
+      const response = await axios.get(`/discover/${params.explore}`, {
         params: {
           page: pageNo
         }
-      })
-      setData((prev) => {
-        return [
-          ...prev,
-          ...response.data.results
-        ]
-      })
-      setTotalPageNo(response.data.total_pages)
-
+      });
+      setData((prev) => [
+        ...prev,
+        ...response.data.results
+      ]);
+      setTotalPageNo(response.data.total_pages);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  }, [params.explore, pageNo]);
 
   const handleScroll = () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -38,19 +33,19 @@ const ExplorePage = () => {
   }
 
   useEffect(() => {
-    fetchData()
-  }, [pageNo])
+    fetchData();
+  }, [fetchData, pageNo]);
 
   useEffect(() => {
-    setPageNo(1)
-    setData([])
-    fetchData()
-  }, [params.explore])
+    setPageNo(1);
+    setData([]);
+    fetchData();
+  }, [params.explore, fetchData]);
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll) 
-  }, [totalPageNo])
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [totalPageNo]);
 
   return (
     <div className='py-16'>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ExploreCard from '../components/ExploreCard'
@@ -9,26 +9,27 @@ const SearchPage = () => {
   const [page, setPage] = useState(1)
   const navigate = useNavigate()
 
-  const fetchData = async (query) => {
+  const fetchData = useCallback(async (query, page) => {
     try {
       const response = await axios.get(`/search/multi`, {
         params: {
           query: query,
           page: page
         }
-      })
-      setData(response.data.results)
+      });
+      setData(prevData => [...prevData, ...response.data.results]);
     } catch (error) {
-      console.log('error', error)
+      console.log('error', error);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search).get('q')
+    const query = new URLSearchParams(location.search).get('q');
     if (query) {
-      fetchData(query)
+      setData([]); 
+      fetchData(query, 1);
     }
-  }, [location.search])
+  }, [location.search, fetchData]);
 
   const handleScroll = () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -37,8 +38,11 @@ const SearchPage = () => {
   }
 
   useEffect(() => {
-    fetchData()
-  }, [page])
+    const query = new URLSearchParams(location.search).get('q');
+    if (query && page > 1) {
+      fetchData(query, page);
+    }
+  }, [page, fetchData, location.search]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll)

@@ -35,7 +35,7 @@ const DetailPage = () => {
       <div className='w-full h-[350px] lg:h[450px] relative '>
         <div className='w-full h-full'>
           <img src={imageURL + data?.backdrop_path} 
-          className='h-full w-full object-cover' />
+          className='h-full w-full object-cover' alt='' />
         </div>
 
         <div className='absolute w-full h-full top-0 bg-gradient-to-t from-neutral-900/90 to-transparent'></div>
@@ -44,7 +44,7 @@ const DetailPage = () => {
       <div className='container mx-auto px-3 py-16 lg:py-0 flex flex-row gap-1 lg:gap-10 '>
         <div className='relative mx-auto lg:-mt-28 w-fit lg:mx-0 min-w-60 hidden lg:block'>
           <img src={imageURL + data?.poster_path} 
-          className='h-80 lg:w-60 object-cover rounded' />
+          className='h-80 lg:w-60 object-cover rounded' alt='' />
         </div>
 
         <div>
@@ -54,7 +54,7 @@ const DetailPage = () => {
                 <h2 className='text-2xl lg:text-4xl font-bold text-white'>{data?.title || data?.original_name}</h2>
                 <p className='text-neutral-400'>{data?.tagline}</p>
               </div>
-              <button onClick={() => handlePlayVideo(data)} className='mt-3 w-ful px-4 text-center bg-white text-black rounded font-bold text-lg hover:bg-gradient-to-l from-red-500 to-orange-500 hover:scale-105 transition-all'>Play Now</button>
+              <button onClick={() => handlePlayVideo(data)} className='mt-3 w-[90px] lg:w-[150px] h-[30px] lg:h-[50px] px-1 lg:px-4 text-center bg-white text-black rounded font-bold text-sm lg:text-lg hover:bg-gradient-to-l from-red-500 to-orange-500 hover:scale-105 transition-all'>Play Now</button>
           </div>
 
           <Divider />
@@ -94,7 +94,7 @@ const DetailPage = () => {
               <div>
                 <div>
                   <img src={imageURL+starCast?.profile_path}
-                  className='w-24 h-24 object-cover rounded-full'
+                  className='w-24 h-24 object-cover rounded-full' alt=''
                    />
                 </div>
                 <p className='font-bold text-center text-sm'>{starCast?.name}</p>
@@ -106,7 +106,7 @@ const DetailPage = () => {
 
       <div>
         <HorizontalScrollCard data={similarData} heading={"Similar "+params?.explore} media_type={params?.explore} />
-        <HorizontalScrollCard data={recommendationData} heading={"Reccomended "+params?.explore} media_type={params?.explore} />
+        <HorizontalScrollCard data={recommendationData} heading={"Recommended "+params?.explore} media_type={params?.explore} />
       </div>
 
         {
@@ -117,5 +117,4 @@ const DetailPage = () => {
     </div>
   );
 }
-
 export default DetailPage;

@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { FaAngleRight, FaAngleLeft } from 'react-icons/fa6';
 import { useSwipeable } from 'react-swipeable';
+import { useNavigate } from 'react-router-dom'
 
 const BannerHome = () => {
   const bannerData = useSelector(state => state.movieoData.bannerData);
   const imageURL = useSelector(state => state.movieoData.imageURL);
   const [currentImage, setCurrentImage] = useState(0);
+  const navigate = useNavigate();
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentImage(prev => (prev < bannerData.length - 1 ? prev + 1 : 0));
-  };
+  }, [bannerData.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setCurrentImage(prev => (prev > 0 ? prev - 1 : bannerData.length - 1));
-  };
+  }, [bannerData.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,7 +24,7 @@ const BannerHome = () => {
     }, 6000);
 
     return () => clearInterval(interval);
-  }, [bannerData.length]);
+  }, [handleNext]);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleNext(),
@@ -31,9 +33,13 @@ const BannerHome = () => {
     trackMouse: true
   });
 
+  const handlePlayNow = (data) => {
+    navigate(`/${data.media_type}/${data.id}`);
+  };
+
   return (
     <section className='w-full h-full'>
-      <div className='flex min-h-full max-h-[95vh] overflow-hidden {...handlers}'>
+      <div className='flex min-h-full max-h-[95vh] overflow-hidden' {...handlers}>
         {bannerData.map((data, index) => {
           return (
             <div
@@ -68,7 +74,7 @@ const BannerHome = () => {
                     <p>View : {Number(data.popularity).toFixed(0)}</p>
                   </div>
                   <div>
-                    <button className='bg-white px-4 py-2 text-black font-bold rounded mt-4 hover:bg-gradient-to-l from-red-500 to-orange-300 shadow-md transition-all hover:scale-105'>Play Now</button>
+                    <button onClick={() => handlePlayNow(data)} className='bg-white px-4 py-2 text-black font-bold rounded mt-4 hover:bg-gradient-to-l from-red-500 to-orange-300 shadow-md transition-all hover:scale-105'>Play Now</button>
                   </div>
                 </div>
               </div>
